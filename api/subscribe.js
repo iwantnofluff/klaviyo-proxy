@@ -28,13 +28,26 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { email, firstName } = req.body;
+    const { email, firstName, message } = req.body;
 
     if (!email) {
       return res.status(400).json({ error: "Email is required" });
     }
 
     // Step 1: Create or update the profile in Klaviyo
+    const profileAttributes = {
+      email: email,
+      first_name: firstName || "",
+    };
+
+    // Store message as a custom property on the profile
+    if (message) {
+      profileAttributes.properties = {
+        "Contact Form Message": message,
+        "Last Contact Date": new Date().toISOString(),
+      };
+    }
+
     const profileRes = await fetch("https://a.klaviyo.com/api/profiles/", {
       method: "POST",
       headers: {
@@ -45,10 +58,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         data: {
           type: "profile",
-          attributes: {
-            email: email,
-            first_name: firstName || "",
-          },
+          attributes: profileAttributes,
         },
       }),
     });
