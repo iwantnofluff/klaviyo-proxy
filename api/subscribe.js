@@ -5,7 +5,7 @@ const KLAVIYO_API_KEY = process.env.KLAVIYO_PRIVATE_KEY;
 const KLAVIYO_LIST_ID = process.env.KLAVIYO_LIST_ID;
 
 const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "https://nofluff.in",
+  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
@@ -28,7 +28,10 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { email, firstName, message } = req.body;
+    // Framer webhook sends keys matching input Name fields
+    const email = req.body.Email || req.body.email;
+    const firstName = req.body.FirstName || req.body.firstName || req.body.Name || req.body.name;
+    const message = req.body.Message || req.body.message;
 
     if (!email) {
       return res.status(400).json({ error: "Email is required" });
