@@ -56,7 +56,7 @@ export default async function handler(req, res) {
       headers: {
         Authorization: `Klaviyo-API-Key ${KLAVIYO_API_KEY}`,
         "Content-Type": "application/json",
-        revision: "2024-10-15",
+        Revision: "2024-10-15",
       },
       body: JSON.stringify({
         data: {
@@ -85,7 +85,7 @@ export default async function handler(req, res) {
           {
             headers: {
               Authorization: `Klaviyo-API-Key ${KLAVIYO_API_KEY}`,
-              revision: "2024-10-15",
+              Revision: "2024-10-15",
             },
           }
         );
@@ -110,7 +110,7 @@ export default async function handler(req, res) {
         headers: {
           Authorization: `Klaviyo-API-Key ${KLAVIYO_API_KEY}`,
           "Content-Type": "application/json",
-          revision: "2024-10-15",
+          Revision: "2024-10-15",
         },
         body: JSON.stringify({
           data: [
